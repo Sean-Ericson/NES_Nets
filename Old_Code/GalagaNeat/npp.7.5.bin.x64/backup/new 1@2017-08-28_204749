@@ -1,0 +1,95 @@
+function Pool:loadFromFile(filename)
+	local file = io.open(filename, 'r')
+	local pool = Pool:new()
+	
+	--parameters
+	local paramList = {}
+	for i = 1, io.read("*number") do
+		paramList[io.read("*line")] = io.read("*number")
+	end
+	pool.networkParameters = paramList
+	
+	paramList = {}
+	for i = 1, io.read("*number") do
+		paramList[io.read("*line")] = io.read("*number")
+	end
+	pool.poolParameters = paramList
+	
+	paramList = {}
+	for i = 1, io.read("*number") do
+		paramList[io.read("*line")] = io.read("*number")
+	end
+	pool.evolutionParameters = paramList
+	
+	paramList = {}
+	for i = 1, io.read("*number") do
+		paramList[io.read("*line")] = io.read("*number")
+	end
+	pool.speciesParameters = paramList
+	
+	--pool numbers
+	pool.population = io.read("*number")
+	pool.generation = io.read("*number")
+	pool.staleness = io.read("*number")
+	pool.topFitness = io.read("*number")
+	
+	for i = 1, io.read("*number") do
+		local curSpecies = Species:new()
+		local speciesParamList = {}
+		
+		for j = 1, io.read("*number") do
+			speciesParamList[io.read("*line")] = io.read("*number")
+		end
+		curSpecies.parameters = speciesParamList
+		
+		curSpecies.topFitness = io.read("*number")
+		curSpecies.averageFitness = io.read("*number")
+		
+		for j = 1, io.read("*number") do
+			local genome = Genome:new()
+			local genomeEvolveParam = {}
+			for k = 1, io.read("*number") do
+				genomeEvolveParam[io.read("*line")] = io.read("*number")
+			end
+			genome.evolutionParameters = genomeEvolveParam
+			genome.fitness = io.read("*number")
+			genome.maxHiddenNeuron = io.read("*number")
+			for k = 1, io.read("*number") do
+				local gene = Gene:new()
+				gene.into = io.read("*number")
+				gene.out = io.read("*number")
+				gene.weight = io.read("*number")
+				if io.read("*number") == 1 then
+					gene.enabled = true
+				else
+					gene.enabled = false
+				end
+				table.insert(genome.genes, gene:copy())
+			end
+			
+			genome.networkParameters = pool.networkParameters
+			
+			table.insert(curSpecies.genomes, genome)
+		end
+		
+	end
+	
+	--Take care of innovationTracker stuff
+	pool.innovationTracker = InnovationTracker:new()
+	local orderedGenes = {}
+	for _, species in pairsByKeys(pool.species) do
+		for _, genome in pairsByKeys(species.genomes) do
+			for _, gene in pairsByKeys(genome.genes) do
+				orderedGenes[gene.innovation] = gene
+			end
+		end
+	end
+	
+	for i = 1, #orderedGenes do
+		pool.innovationTracker:add(orderedGenes[i])
+	end
+	
+	--I think that's it?
+	file:close()
+	return pool
+end

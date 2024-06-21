@@ -1,0 +1,74 @@
+4212.81407
+inputSize	81
+maxNodes	5000
+outputSize	3
+biasMutationChance	11.648
+disableMutationChance	145.012
+enableMutationChance	223.013
+linkMutationChance	0.179
+mutateWeightsChance	0.002
+nodeMutationChance	0.000
+perturbChance	1520.084
+stepSize	728.098
+17		5000		0.3217		1		enabled
+30		5000		-0.2080		2		enabled
+30		83		1.1517		3		enabled
+83		5000		0.4940		4		disabled
+82		4998		0.8917		7		enabled
+74		4998		-0.7708		10		disabled
+84		83		0.2805		19		enabled
+25		4999		1.2182		20		enabled
+63		4998		-0.9056		21		enabled
+17		84		0.8483		25		disabled
+84		5000		1.0237		26		enabled
+82		5000		0.1646		89		enabled
+81		4998		-0.9120		102		enabled
+46		4998		0.6691		103		disabled
+41		5000		-0.1258		125		enabled
+31		4999		-0.8877		132		enabled
+28		4999		0.2098		145		enabled
+30		85		1.1517		177		enabled
+85		5000		0.4940		217		enabled
+82		85		-0.3757		232		disabled
+82		87		0.4730		271		enabled
+45		83		0.2113		282		enabled
+86		85		1.8537		291		enabled
+71		85		-0.7215		292		disabled
+82		86		-0.1630		317		enabled
+85		87		0.1762		334		enabled
+40		83		-0.1134		343		enabled
+87		4998		-0.0329		354		enabled
+88		4999		1.2182		368		disabled
+30		86		0.6490		419		disabled
+89		85		-0.7215		461		enabled
+7		85		0.4394		483		enabled
+16		85		0.1048		487		enabled
+46		87		0.6490		488		disabled
+25		87		-0.2297		539		enabled
+13		85		-0.9933		570		disabled
+25		88		1.0000		571		enabled
+71		89		1.0000		572		disabled
+90		4998		-0.7708		576		enabled
+82		90		-0.8614		608		disabled
+82		89		-0.8074		622		disabled
+38		84		-0.2881		637		disabled
+74		90		1.0000		649		enabled
+91		89		1.0000		678		disabled
+73		90		-0.3153		713		disabled
+30		87		-0.3127		719		enabled
+71		91		1.0000		720		enabled
+82		91		0.4386		767		disabled
+31		91		0.9062		799		enabled
+55		91		-0.3351		800		enabled
+30		92		1.0000		822		enabled
+29		88		-0.4922		860		enabled
+69		90		0.5747		878		enabled
+52		91		-0.3655		879		enabled
+92		86		0.6490		920		enabled
+74		89		0.5217		971		enabled
+82		93		-0.8865		991		enabled
+61		85		0.7910		1021		enabled
+73		93		1.0000		1055		enabled
+93		90		-0.3153		1056		enabled
+80		93		0.1065		1073		disabled
+26		93		0.4444		1102		enabled

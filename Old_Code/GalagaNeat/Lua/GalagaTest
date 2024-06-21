@@ -1,0 +1,154 @@
+--General Consts
+NO_SPRITE = 0x80
+OFF_SCREEN = 0xFF
+PLAYER_POS = 0x0203
+EXTRA_LIVES_BYTE = 0x0487
+MYSTERY_BYTE = 0x0471
+--Attack sprite constants
+FIRST_SPRITE_BYTE = 0x0220
+LAST_SPRITE_BYTE  = 0x02D0
+SPRITE_STEP = 0x10
+X_POS_OFFSET = 0x3
+Y_POS_OFFSET = 0x2
+--Bullet sprite constants
+FIRST_BULLET_BYTE = 0x0090
+LAST_BULLET_BYTE = 0x00AC
+BULLET_STEP = 0x4
+BULLET_X_OFFSET = 0x2
+BULLET_Y_OFFSET = 0x1
+--Score
+SCORE_FIRST_BYTE = 0x00E0
+SCORE_LAST_BYTE = 0x00E6
+
+ButtonNames = {
+                "A",
+                "B",
+                "Up",
+                "Down",
+                "Left",
+                "Right",
+        }
+
+function getScore()
+	local sum = 0
+	local placeVal = 1
+	for b = SCORE_LAST_BYTE, SCORE_FIRST_BYTE, -1 do
+		digit = memory.readbyte(b)
+		sum = sum + placeVal * digit
+		placeVal = placeVal * 10
+	end
+	return sum
+end
+
+function getAttackSprites()
+	local sprites = {}
+	for b = FIRST_SPRITE_BYTE, LAST_SPRITE_BYTE, SPRITE_STEP do
+		if memory.readbyte(b) ~= NO_SPRITE then
+			local x = memory.readbyte(b + X_POS_OFFSET)
+			local y = memory.readbyte(b + Y_POS_OFFSET)
+			sprites[#sprites+1] = {["x"] = x, ["y"] = y}
+		end
+	end
+	return sprites
+end
+
+function getBulletSprites()
+	local sprites = {}
+	for b = FIRST_BULLET_BYTE, LAST_BULLET_BYTE, BULLET_STEP do
+		if (memory.readbyte(b) ~= NO_SPRITE) and (memory.readbyte(b) ~= OFF_SCREEN) then
+			local x = memory.readbyte(b + BULLET_X_OFFSET)
+			local y = memory.readbyte(b + BULLET_Y_OFFSET)
+			sprites[#sprites+1] = {["x"] = x, ["y"] = y}
+		end
+	end
+	return sprites
+end
+
+function getPlayerPos()
+	return memory.readbyte(PLAYER_POS)
+end
+
+function isGameActive()
+	local lifeByte = memory.readbyte(EXTRA_LIVES_BYTE)
+	local shipByte = memory.readbyte(MYSTERY_BYTE)
+	local gameOver = (lifeByte == 0) and ((shipByte == 0) or (shipByte == 0xF0))
+	return not gameOver
+end
+
+function clearJoypad()
+    controller = {}
+    for b = 1,#ButtonNames do
+        controller["P1 " .. ButtonNames[b]] = false
+    end
+    joypad.set(controller)
+end
+
+function setJoypadA(clear)
+    controller = {}
+    if (clear) then
+        for b = 1, #ButtonNames do
+            controller[ButtonNames[b]] = false
+        end
+    end
+    controller["A"] = true
+    joypad.set(1, controller)
+end
+
+function setJoypadLeftFire(clear)
+    controller = {}
+    if (clear) then
+        for b = 1, #ButtonNames do
+            controller[ButtonNames[b]] = false
+        end
+    end
+    controller["left"] = true
+    controller["A"] = true
+    joypad.set(1, controller)
+end
+
+function setJoypadRightFire(clear)
+    controller = {}
+    if (clear) then
+        for b = 1, #ButtonNames do
+            controller[ButtonNames[b]] = false
+        end
+    end
+    controller["right"] = true
+    controller["A"] = true
+    joypad.set(1, controller)
+end
+
+
+romFile = "J:\GalagaNeat\Galaga\Galaga.nes"
+saveState = "J:\GalagaNeat\SaveStates\TestSave.fc0.fcs"
+
+goingLeft = true
+loadState = true
+frames
+
+emu.print("bout to enter loop boiiiiiiiiiii")
+while (true) do
+
+	if loadState then 
+		emu.print("loading saveState")
+		savestate.load(savestate.object(10))
+		loadState = false
+	end
+	
+	if not isGameActive() then loadState = true end
+
+    if goingLeft then
+        setJoypadLeftFire(true)
+    end
+    if not goingLeft then
+        setJoypadRightFire(true)
+    end
+    pos = getPlayerPos()
+    if pos < 10 then
+        goingLeft = false
+    end
+    if pos > 155 then
+        goingLeft = true
+    end
+	emu.frameadvance();
+end

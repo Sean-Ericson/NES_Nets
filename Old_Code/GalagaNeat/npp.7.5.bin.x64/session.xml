@@ -1,0 +1,11 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="3">
+            <File firstVisibleLine="428" xOffset="0" scrollWidth="1140" startPos="0" endPos="0" selMode="0" lang="Lua" encoding="-1" filename="C:\Users\Sean\Desktop\GalagaNeat\Lua\GalagaTest.lua" backupFilePath="" originalFileLastModifTimestamp="1505261886" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="630" startPos="0" endPos="0" selMode="0" lang="Lua" encoding="-1" filename="C:\Users\Sean\Desktop\GalagaNeat\Lua\LuaTest.lua" backupFilePath="" originalFileLastModifTimestamp="1504052166" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="7209071" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="930" startPos="0" endPos="0" selMode="0" lang="Lua" encoding="-1" filename="C:\Users\Sean\Desktop\GalagaNeat\Lua\NEATEvolve.lua" backupFilePath="" originalFileLastModifTimestamp="1503530446" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="6357109" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="1129" xOffset="0" scrollWidth="1400" startPos="30946" endPos="30946" selMode="0" lang="Lua" encoding="-1" filename="C:\Users\Sean\Desktop\GalagaNeat\Lua\NESEvolve.lua" backupFilePath="" originalFileLastModifTimestamp="1507224590" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="0" mapWrapIndentMode="-1" mapIsWrap="no" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>
