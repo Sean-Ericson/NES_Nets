@@ -3,18 +3,13 @@
 ## Imports
 from multiprocessing.pool import Pool
 import subprocess
-import threading
-from queue import Queue
-import time
 from datetime import datetime
-import matplotlib.pyplot as plt
-import numpy as np
 import os
 import shutil
 
-EMU = r"D:\Programs\Emulators\fceux-2.6.6-win64\fceux64.exe"
-ROM = r"D:\Programs\Emulators\ROMS\Galaga\Galaga.nes"
-SCRIPT = r"D:\Programming\Github\NES_Nets\lua\test_script.lua"
+EMU = r".\fceux-2.6.6-win64\fceux64.exe"
+ROM = r".\ROMS\Galaga\Galaga.nes"
+SCRIPT = r".\lua\test_script.lua"
 DIR = "D:\\Programming\\Github\\NES_Nets\\"
 
 class EMU_Process():

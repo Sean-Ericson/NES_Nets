@@ -32,7 +32,10 @@ end
 print("i = " .. tostring(i))
 
 --io.output(io.stdout)
-
+io.write("A")
+io.write("B")
+io.write("C")
+io.write(420)
 io.write(ga.get_score())
 
 --print("Script end")
