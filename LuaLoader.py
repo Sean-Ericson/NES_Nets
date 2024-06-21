@@ -45,7 +45,7 @@ class EMU_Process():
     self.proc = subprocess.run(arg, capture_output=True)
 
     # Get output from stdout, append to queue
-    output = str(self.proc.stdout).split('\\n')[-1]
+    output = str(self.proc.stdout)
     return (self.name, output)
   
   @staticmethod

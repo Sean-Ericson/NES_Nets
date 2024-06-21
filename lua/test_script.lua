@@ -1,12 +1,12 @@
-print("Start lua script")
+--print("Start lua script")
 
 package.path = package.path .. ";D:/Programming/Github/NES_Nets/lua/?.lua"
-galaga = require("galaga")
+ga = require("galaga")
 
 ifile = io.open("input")
 io.input(ifile)
 input = io.read("*all")
-print(input)
+--print(input)
 io.close(ifile)
 
 emu.speedmode("turbo")
@@ -22,7 +22,7 @@ joypad.set(1, {start = true})
 emu.frameadvance()
 
 i=0
-while not galaga.game_over() do
+while not ga.is_game_over() do
     left = (math.random() > 0.5)
     cont = {A=true, left=(left), right=(not left)}
     joypad.set(1, cont)
@@ -31,9 +31,13 @@ while not galaga.game_over() do
 end
 print("i = " .. tostring(i))
 
-io.output(io.stdout)
-io.write(galaga.get_score())
+--io.output(io.stdout)
+io.write("A")
+io.write("B")
+io.write("C")
+io.write(420)
+io.write(ga.get_score())
 
-print("Script end")
+--print("Script end")
 
 emu.exit()

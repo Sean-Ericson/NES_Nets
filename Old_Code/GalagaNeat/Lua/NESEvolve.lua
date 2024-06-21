@@ -70,7 +70,7 @@ function pairsByKeys(t, f)
 	return iter
 end
 
---Custom len() function for tables becuause apparently #table if fucking retarded
+--Custom len() function for tables becuause apparently #table is bad
 -->Shamelessly stolen from https://stackoverflow.com/questions/2705793/how-to-get-number-of-entries-in-a-lua-table
 function tablelength(T)
 	local count = 0
