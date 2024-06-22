@@ -1,6 +1,6 @@
 -- This is mostly coppied from the "Old_Code" lua stuff
 
--- #region Galaga constants
+-- Galaga constants
 
 --General Consts
 NO_SPRITE = 0x80
@@ -75,11 +75,10 @@ ButtonNames = {
 	"select"
 }
 
--- #endregion
-
--- #region Helper Functions
+-- Helper Functions
 
 function read_BCD(first_byte, last_byte)
+	-- Ready big-endian binary coded decimal from memory
 	local sum = 0
 	local placeVal = 1
 	for b = last_byte, first_byte, -1 do
@@ -89,9 +88,7 @@ function read_BCD(first_byte, last_byte)
 	return sum
 end
 
--- #endregion
-
-
+-- Galaga Module
 local ga = {}
 
 function ga.is_game_over()
@@ -119,6 +116,5 @@ function ga.get_hit_miss_ratio()
 	end
 	return ga.get_enemies_hit() / shots_fired
 end
-
 
 return ga

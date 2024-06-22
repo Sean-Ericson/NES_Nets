@@ -6,55 +6,56 @@ import subprocess
 from datetime import datetime
 import os
 import shutil
+import json
+import matplotlib.pyplot as plt
+import numpy as np
 
 EMU = r".\fceux-2.6.6-win64\fceux64.exe"
 ROM = r".\ROMS\Galaga\Galaga.nes"
-SCRIPT = r".\lua\test_script.lua"
+SCRIPT = r"D:\Programming\Github\NES_Nets\lua\test_script.lua"
 DIR = "D:\\Programming\\Github\\NES_Nets\\"
 
 class EMU_Process():
-  def __init__(self, name="process/"):
+  def __init__(self, name, input):
     self.emu = EMU
     self.rom = ROM
-    self.base_script = SCRIPT
+    self.script = SCRIPT
+    self.input = input
     self.name = name
-
-  def init_files(self, script_input=""):
-     #Create files
-    if os.path.exists(self.name): #Delete directory if it already exists
-      shutil.rmtree(self.name)
-
-    os.mkdir(self.name)
-    input_filename = "{}/input".format(self.name)
-    self.input_file = open(input_filename, 'w')
-    self.input_file.write(script_input)
-    self.input_file.close()
-
-    #
-    self.run_script = DIR + "{}/script.lua".format(self.name)
-    shutil.copyfile(self.base_script, self.run_script)
 
   def run(self):
     # Start emulator on a subprocess
-    arg = self.emu + ' -lua ' + self.run_script + ' ' + self.rom
-    self.proc = subprocess.run(arg, capture_output=True)
+    arg = self.emu + ' -lua ' + self.script + ' ' + self.rom
+    input_json = json.dumps(self.input)
+    self.proc = subprocess.run(arg, input=input_json, capture_output=True, encoding="utf-8")
 
-    # Get output from stdout, append to queue
-    output = str(self.proc.stdout)
-    return (self.name, output)
+    # Get output from stdout
+    ## remove weird junk from start of stdout
+    output = self.proc.stdout[self.proc.stdout.index("\n")+1:] 
+    
+    # Convert output to dict
+    try:
+      output = json.loads(output)
+    except:
+      # Most likely empty string as output; return empty dict
+      output = dict()
+
+    return output
   
   @staticmethod
   def create_and_run(args):
-    name, script_input = args
-    proc = EMU_Process(name)
-    proc.init_files(script_input)
-    return proc.run()
-
+    '''
+    Used for process pool execution
+    '''
+    name, input = args
+    proc = EMU_Process(name, input)
+    return (name, proc.run())
 
 def run_agents(N, name_base=""):
-  names = ["output/Agent{}_{}/".format(name_base, i) for i in range(1, N+1)]
+  names = ["{}_{}".format(name_base, i) for i in range(1, N+1)]
   pool = Pool(N)
-  res = pool.map_async(EMU_Process.create_and_run, [(n, n) for n in names])
+  args = [(n, {"name": n}) for n in names]
+  res = pool.map_async(EMU_Process.create_and_run, args)
   final = res.get()
   del pool
   return final
@@ -76,7 +77,7 @@ def main():
   ## Code
   print("PYTHON SCRIPT START\n")
 
-  print(run_agents(1))
+  print(run_agents(1, "Agent"))
   
   print("\nPYTHON SCRIPT END")
 

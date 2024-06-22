@@ -1,9 +1,10 @@
+-- Misc
+
 --Custom error-logging function
 function LogError(errorString)
 	emu.pause()
 	emu.print("Error: "..errorString)
 end
-
 
 --Function for calculating N!/D!
 function factorialQuotient(n, d)
@@ -78,11 +79,10 @@ function tablelength(T)
 	return count
 end
 
---******************************
+-- Galaga Code
 --This section is the code to apply the network evolution to Galaga
 --These functions and defaults assume galaga is currently playing in the emulator
 --when you start this script.
---******************************
 
 --***
 --Galaga constants
@@ -286,14 +286,8 @@ function centeredInput(needed)
 	
 	return vals --length 1265
 end
---***
---/Input Function
---***
 
-
---***
 --Output Function
---***
 function galagaOutputFunction(output)
 	--get joypad
 	local cont = joypad.getimmediate(1)
@@ -309,10 +303,6 @@ function galagaOutputFunction(output)
 	cont["right"] = (output[3] > 0)
 	joypad.set(1, cont)
 end
---***
---/Output Function
---***
-
 
 --***
 --Misc. Galaga functions
@@ -480,12 +470,9 @@ end
 --/Misc. Galaga functions
 --***
 
-
-
 --******************************
 --End Galaga code
 --******************************
-
 
 --Parameter names
 
@@ -494,7 +481,6 @@ SPECIES_PARAMETERS = {"connectionCoeff", "weightCoeff", "speciesThreshold", "cro
 EVOLUTION_PARAMETERS = {"mutateWeightsChance", "affectedWeigths", "perturbChance", "stepSize", "linkMutationChance",
                         "biasMutationChance", "nodeMutationChance", "disableMutationChance", "enableMutationChance"}
 
---**********
 --Pool Class:
 -->>A collection of genomes split into species
 -->>R E N spells Ren but I'm raw.
@@ -1076,12 +1062,9 @@ end
 --/Pool
 --**********
 
-
-
---**********
 --InnovationTracker Class
 -->>Tracks the new genes being introduced to the pool
---**********
+
 InnovationTracker = {}
 InnovationTracker.__index = InnovationTracker
 
@@ -1122,14 +1105,10 @@ end
 --/InnovationTracker
 --**********
 
-
-
---**********
 --Species Class:
 -->>A collection of similar genomes
 -->>If you wanna find out what's behind these cold eyes,
 -->>you'll just have to claw your way through this disguise!
---**********
 Species = {}
 Species.__index = Species
 
@@ -1243,11 +1222,9 @@ end
 --/Species
 --**********
 
-
---**********
 --Genome Class
 -->>A collection of genes describing a network
---**********
+
 Genome = {}
 Genome.__index = Genome
 
@@ -1745,12 +1722,8 @@ end
 --/Genome
 --**********
 
-
-
---**********
 --Gene Class
 -->>Represents a connection between two neurons (i.e. out of A into B)
---**********
 Gene = {}
 Gene.__index = Gene
 
@@ -1796,11 +1769,7 @@ end
 --/Gene
 --**********
 
-
-
---**********
 --Network Class
---**********
 Network = {}
 Network.__index = Network
 
@@ -1899,11 +1868,7 @@ end
 --/Network
 --**********
 
-
-
---**********
 --Neuron Class
---**********
 Neuron = {}
 Neuron.__index = Neuron
 
@@ -1921,8 +1886,7 @@ end
 --/Neuron
 --**********
 
-
---tmp function for testing
+--tmp functions for testing
 function printGenome(genome)
 	print("Printing Genome")
     print("\tFitness: "..genome.fitness)
@@ -2079,9 +2043,7 @@ function printPool(pool)
    print("")
 end
 
---**********
 --Defaults
---**********
 GALAGA_NET_DEFAULTS = {
 	["inputSize"] = 1265,
 	["outputSize"] = 3,
@@ -2131,6 +2093,8 @@ GALAGA_EVOLVE_DEFAULTS = {
 --**********
 --/Defaults
 --**********
+
+-- Script
 print("Setting speed")
 emu.speedmode("maximum")
 

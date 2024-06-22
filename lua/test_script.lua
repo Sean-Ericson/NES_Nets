@@ -1,26 +1,19 @@
---print("Start lua script")
-
+-- Imports
 package.path = package.path .. ";D:/Programming/Github/NES_Nets/lua/?.lua"
 ga = require("galaga")
+json = require("json")
 
-ifile = io.open("input")
-io.input(ifile)
-input = io.read("*all")
---print(input)
-io.close(ifile)
+input = json.decode(io.stdin:read())
+print("Input: ", input)
 
-emu.speedmode("turbo")
---math.randomseed(os.time())
+-- Set emulation speed and seed RNG
+--emu.speedmode("turbo")
+math.randomseed(os.time())
 
--- Get through loading
-for i=1,250 do 
-    emu.frameadvance()
-end
+-- Load save state
+savestate.load(savestate.object(10))
 
--- start game
-joypad.set(1, {start = true})
-emu.frameadvance()
-
+-- Run game
 i=0
 while not ga.is_game_over() do
     left = (math.random() > 0.5)
@@ -29,15 +22,15 @@ while not ga.is_game_over() do
     i = i + 1
     emu.frameadvance()
 end
-print("i = " .. tostring(i))
 
---io.output(io.stdout)
-io.write("A")
-io.write("B")
-io.write("C")
-io.write(420)
-io.write(ga.get_score())
+-- Write data to stdout
+local output = {
+    score = ga.get_score(), 
+    accuracy = ga.get_hit_miss_ratio(),
+    frames = i
+}
+io.write(json.encode(output))
 
---print("Script end")
-
+print("Output: ", output)
+print("Script end")
 emu.exit()
