@@ -27,11 +27,11 @@ class EMU_Process():
     # Start emulator on a subprocess
     arg = self.emu + ' -lua ' + self.script + ' ' + self.rom
     input_json = json.dumps(self.input)
-    self.proc = subprocess.run(arg, input=input_json, capture_output=True, encoding="utf-8")
+    self.proc = subprocess.run(arg, input=input_json, capture_output=True, encoding="utf-8", bufsize=0)
 
     # Get output from stdout
     ## remove weird junk from start of stdout
-    output = self.proc.stdout[self.proc.stdout.index("\n")+1:] 
+    output = self.proc.stdout.replace("timeStampModuleInit\n", "")
     
     # Convert output to dict
     try:
@@ -49,7 +49,8 @@ class EMU_Process():
     '''
     name, input = args
     proc = EMU_Process(name, input)
-    return (name, proc.run())
+    output = proc.run()
+    return (name, output)
 
 def run_agents(N, name_base=""):
   names = ["{}_{}".format(name_base, i) for i in range(1, N+1)]

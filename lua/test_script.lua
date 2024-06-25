@@ -13,9 +13,21 @@ math.randomseed(os.time())
 -- Load save state
 savestate.load(savestate.object(10))
 
+local pic_taken = false
+local pic_data = nil
+
 -- Run game
-i=0
+local i=0
 while not ga.is_game_over() do
+
+    if joypad.get(1).select then
+        if not pic_taken then
+            pic_data = ga.get_pixels()
+            pic_taken = true
+            print("Pic taken")
+        end
+    end
+
     left = (math.random() > 0.5)
     cont = {A=true, left=(left), right=(not left)}
     joypad.set(1, cont)
@@ -27,10 +39,12 @@ end
 local output = {
     score = ga.get_score(), 
     accuracy = ga.get_hit_miss_ratio(),
-    frames = i
+    frames = i,
+    pic = pic_data
 }
+print(json.encode(output))
 io.write(json.encode(output))
 
 print("Output: ", output)
 print("Script end")
-emu.exit()
+--emu.exit()

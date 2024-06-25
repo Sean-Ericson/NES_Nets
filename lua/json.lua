@@ -68,7 +68,7 @@ local function encode_table(val, stack)
   if rawget(val, 1) ~= nil or next(val) == nil then
     -- Treat as array -- check keys are valid and it is not sparse
     local n = 0
-    for k in pairs(val) do
+    for k in ipairs(val) do
       if type(k) ~= "number" then
         error("invalid table: mixed or invalid key types")
       end

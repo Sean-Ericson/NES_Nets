@@ -3,68 +3,68 @@
 -- Galaga constants
 
 --General Consts
-NO_SPRITE = 0x80
-OFF_SCREEN = 0xFF
-PLAYER_POS = 0x0203
-EXTRA_LIVES_BYTE = 0x0487
-MYSTERY_BYTE = 0x0471
+local NO_SPRITE = 0x80
+local OFF_SCREEN = 0xFF
+local PLAYER_POS = 0x0203
+local EXTRA_LIVES_BYTE = 0x0487
+local MYSTERY_BYTE = 0x0471
 
 --Attack sprite constants
-FIRST_SPRITE_BYTE = 0x0220
-LAST_SPRITE_BYTE = 0x02D0
-SPRITE_STEP = 0x10
-X_POS_OFFSET = 0x3
-Y_POS_OFFSET = 0x2
+local FIRST_SPRITE_BYTE = 0x0220
+local LAST_SPRITE_BYTE = 0x02D0
+local SPRITE_STEP = 0x10
+local X_POS_OFFSET = 0x3
+local Y_POS_OFFSET = 0x2
 
 --Enemy Bullet sprite constants
-FIRST_BULLET_BYTE = 0x0090
-LAST_BULLET_BYTE = 0x00AC
-BULLET_STEP = 0x4
-BULLET_X_OFFSET = 0x2
-BULLET_Y_OFFSET = 0x1
+local FIRST_BULLET_BYTE = 0x0090
+local LAST_BULLET_BYTE = 0x00AC
+local BULLET_STEP = 0x4
+local BULLET_X_OFFSET = 0x2
+local BULLET_Y_OFFSET = 0x1
 
 --Player bullet sprite constants
-FIRST_PLAYER_BULLET_BYTE = 0x02E0
-LAST_PLAYER_BULLET_BYTE = 0x02E8
-PLAYER_BULLET_STEP = 0x8
+local FIRST_PLAYER_BULLET_BYTE = 0x02E0
+local LAST_PLAYER_BULLET_BYTE = 0x02E8
+local PLAYER_BULLET_STEP = 0x8
 
 --Score
-SCORE_FIRST_BYTE = 0x00E0
-SCORE_LAST_BYTE = 0x00E6
+local SCORE_FIRST_BYTE = 0x00E0
+local SCORE_LAST_BYTE = 0x00E6
 
 --Shots Fired
-SHOTS_FIRST_BYTE = 0x04A0
-SHOTS_LAST_BYTE = 0x04A7
+local SHOTS_FIRST_BYTE = 0x04A0
+local SHOTS_LAST_BYTE = 0x04A7
 
 --Enemies Hit
-ENEMIES_HIT_FIRST_BYTE = 0x04A8
-ENEMIES_HIT_LAST_BYTE = 0x04AF
+local ENEMIES_HIT_FIRST_BYTE = 0x04A8
+local ENEMIES_HIT_LAST_BYTE = 0x04AF
 
 --Position constants
-PLAYER_MIN_POS = 8 --decimal
-PLAYER_MAX_POS = 183 --decimal
-SCREEN_MIN_Y = 0 --decimal
-SCREEN_MAX_Y = 230 --decimal
-SCREEN_MIN_X = 0
-SCREEN_MAX_X = 200 -- decimal
+local PLAYER_MIN_POS = 8 --decimal
+local PLAYER_MAX_POS = 183 --decimal
+local SCREEN_MIN_Y = 0 --decimal
+local SCREEN_MAX_Y = 230 --decimal
+local SCREEN_MIN_X = 0
+local SCREEN_MAX_X = 199 -- decimal
 
 --Enemy Formation Constants
-ROW_1_FIRST_BYTE = 0x0403
-ROW_1_LAST_BYTE = 0x0406
-ROW_2_FIRST_BYTE = 0x0411
-ROW_2_LAST_BYTE = 0x0418
-ROW_3_FIRST_BYTE = 0x0421
-ROW_3_LAST_BYTE = 0x0428
-ROW_4_FIRST_BYTE = 0x0430
-ROW_4_LAST_BYTE = 0x0439
-ROW_5_FIRST_BYTE = 0x0440
-ROW_5_LAST_BYTE = 0x0449
+local ROW_1_FIRST_BYTE = 0x0403
+local ROW_1_LAST_BYTE = 0x0406
+local ROW_2_FIRST_BYTE = 0x0411
+local ROW_2_LAST_BYTE = 0x0418
+local ROW_3_FIRST_BYTE = 0x0421
+local ROW_3_LAST_BYTE = 0x0428
+local ROW_4_FIRST_BYTE = 0x0430
+local ROW_4_LAST_BYTE = 0x0439
+local ROW_5_FIRST_BYTE = 0x0440
+local ROW_5_LAST_BYTE = 0x0449
 
 --Input constants
-GRID_X = 19
-GRID_y = 23
+local GRID_X = 19
+local GRID_y = 23
 
-ButtonNames = {
+local ButtonNames = {
 	"A",
 	"B",
 	"up",
@@ -77,7 +77,7 @@ ButtonNames = {
 
 -- Helper Functions
 
-function read_BCD(first_byte, last_byte)
+local function read_BCD(first_byte, last_byte)
 	-- Ready big-endian binary coded decimal from memory
 	local sum = 0
 	local placeVal = 1
@@ -115,6 +115,26 @@ function ga.get_hit_miss_ratio()
 		return 0
 	end
 	return ga.get_enemies_hit() / shots_fired
+end
+
+function ga.get_pixels(xmin, xmax, ymin, ymax)
+	-- default values
+	xmin = xmin or 0
+	xmax = xmax or SCREEN_MAX_X
+	ymin = ymin or 0
+	ymax = ymax or SCREEN_MAX_Y
+
+	-- get pixel data
+	data = {}
+	for j=0, ymax do
+		data[j] = {}
+		for i=0, xmax do
+			r, g, b = emu.getscreenpixel(i, j, true)
+			data[j][i] = {r, g, b}
+		end
+	end
+
+	return data
 end
 
 return ga
